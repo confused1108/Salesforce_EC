@@ -1,0 +1,41 @@
+public with sharing class letitbe{
+
+public String cname{get;set;}
+public String caddress{get;set;}
+public String cmail{get;set;}
+public String cwebsite{get;set;}
+public String pname{get;set;}
+public String page{get;set;}
+public String pmail{get;set;}
+public String cid{get;set;}
+public String pnumber{get;set;}
+public List<company__C> comlist{get;set;}
+public PageReference saveIt(){
+
+        integer count= database.countQuery('select count() from company__c where name=:cname');
+        if(count==0){
+            company__c com=new company__c(name=cname,address__c=caddress,email__c=cmail,website__c=cwebsite);
+            insert com;
+            cid=com.id;            
+            employee__c emp=new employee__c(cid__c=cid,age__c=page,name=pname,email__c=pmail,number__c=pnumber);
+            insert emp;
+        }
+        else{
+            comlist= database.query('select id from company__c where name=:cname');
+            cid=comlist[0].id;
+            employee__c emp=new employee__c(cid__c=cid,age__c=page,name=pname,email__c=pmail,number__c=pnumber);
+            insert emp;
+        }
+              
+         PageReference pageRef = new PageReference('/apex/thanks');
+         pageRef.setRedirect(true);
+         return pageRef;
+      }  
+      
+      public PageReference pass(){
+         PageReference pageRef = new PageReference('/apex/details');
+         pageRef.setRedirect(true);
+         return pageRef;
+      }
+
+}
