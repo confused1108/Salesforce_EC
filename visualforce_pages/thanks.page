@@ -1,0 +1,6 @@
+<apex:page showHeader="false" sidebar="false" controller="letitbe">
+ <h1 style="text-align:center;">Thanks for your response</h1>
+ <apex:form >
+        <apex:commandButton action="{!pass}" value="Submit another response"/>
+ </apex:form>
+</apex:page>
